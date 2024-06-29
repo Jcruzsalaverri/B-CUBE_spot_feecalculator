@@ -1,0 +1,1 @@
+trade_id,price,quantity,quote,timestamp,taker,best_price
