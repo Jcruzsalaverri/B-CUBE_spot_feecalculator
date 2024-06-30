@@ -31,7 +31,7 @@ This package helps calculate the total fees paid for spot trading on Binance ove
 3. Place the exported Excel file in the root folder of this project and rename it to `trade_history.xlsx`.
 4. Run the fee calculation script: 
 
- ``` python populate_bnb_fees.py ``` 
+ ``` python .\populate_bnb_fees.py ``` 
 
 5. The script will create a new file named `trade_history_with_bnb_prices_and_fees.csv` and display the total fees paid in the terminal.
 
@@ -45,11 +45,11 @@ The script supports the following command-line arguments:
 
 Example usage with verbose output:
 
- ``` python populate_bnb_fees.py -v ``` 
+ ``` python .\populate_bnb_fees.py -v ``` 
 
 Example usage:
 
- ``` python populate_bnb_fees.py -i my_trade_history.xlsx -o my_output.csv ``` 
+ ``` python .\populate_bnb_fees.py -i my_trade_history.xlsx -o my_output.csv ``` 
 
 ## File Description
 
