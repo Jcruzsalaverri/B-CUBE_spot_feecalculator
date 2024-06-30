@@ -4,9 +4,9 @@ This package helps calculate the total fees paid for spot trading on Binance ove
 
 ## Features
 
-- Downloads historical trade data from Binance
-- Calculates fees paid in BNB and converts them to USDT
-- Outputs total fees paid in USD
+- Download historical price data from Binance
+- Converts fees paid in any coin to USDT
+- Outputs total fees paid in USDT as well as a coin breakdown
 
 ## Prerequisites
 
