@@ -57,19 +57,6 @@ class TestPopulateBNBFees(unittest.TestCase):
             populate_bnb_fees('non_existent_file.csv', self.output_file)
 
     def test_missing_columns(self):
-        invalid_data = pd.DataFrame({
-            'Date(UTC)': ['2024-01-01 00:00:00'],
-            'Fee Coin': ['BNB']
-        })
-        invalid_input = 'invalid_input.csv'
-        invalid_data.to_csv(invalid_input, index=False)
-
-        with self.assertRaises(SystemExit):
-            populate_bnb_fees(invalid_input, self.output_file)
-
-        os.remove(invalid_input)
-
-    def test_missing_columns(self):
         # Create a DataFrame with missing columns
         invalid_data = pd.DataFrame({
             'Date(UTC)': ['2024-01-01 00:00:00'],
