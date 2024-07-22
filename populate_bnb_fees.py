@@ -132,6 +132,7 @@ def populate_bnb_fees(input_file, output_csv, verbose=False):
 
     # Calculate and print the total fees
     total_fees = Decimal('0')
+    total_fees_without_bnb_discount = Decimal('0')
     fee_breakdown = {}
     rows_processed = 0
     rows_with_errors = 0
@@ -146,10 +147,17 @@ def populate_bnb_fees(input_file, output_csv, verbose=False):
                 fee_breakdown[fee_coin] += fee
             else:
                 fee_breakdown[fee_coin] = fee
+            
+            # Calculate fees without BNB discount
+            if fee_coin == 'BNB':
+                total_fees_without_bnb_discount += fee / Decimal('0.75')
+            else:
+                total_fees_without_bnb_discount += fee
         else:
             rows_with_errors += 1
 
     print(f"\nTotal fees paid: ${total_fees:.2f}")
+    print(f"Total fees if BNB was not used: ${total_fees_without_bnb_discount:.2f}")
     print("\nFee breakdown by coin:")
     for coin, fee in fee_breakdown.items():
         print(f"{coin}: ${fee:.2f}")
