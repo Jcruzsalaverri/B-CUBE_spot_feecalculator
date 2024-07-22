@@ -60,7 +60,7 @@ Example usage:
 ## To Do
 We're always looking to improve this project. Here's a list of features we're planning to implement. Feel free to contribute by tackling any of these items!
 
-- [ ] Omit trades from the current day from being processed (due to public market data delay of t-1)
+- [x] ~~Omit trades from the current day from being processed (due to public market data delay of t-1)~~ (Completed on 2024-07-22)
 - [ ] Add graphing features to analyze fees over time
 - [ ] Develop additional KPIs
 

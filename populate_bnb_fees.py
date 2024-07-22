@@ -7,11 +7,12 @@ import multiprocessing
 from functools import partial
 import numpy as np
 from decimal import Decimal, getcontext
+from datetime import datetime, timedelta
 
 # Set a high precision for decimal calculations
 getcontext().prec = 10
 
-def process_chunk(chunk, verbose=False):
+def process_chunk(chunk, current_date, verbose=False):
     bnb_prices = []
     fee_usdt_values = []
 
@@ -20,6 +21,12 @@ def process_chunk(chunk, verbose=False):
         bnb_price = None
 
         try:
+            trade_date = datetime.strptime(row['Date(UTC)'], '%Y-%m-%d %H:%M:%S')
+            if trade_date.date() >= current_date.date():
+                bnb_prices.append(None)
+                fee_usdt_values.append(None)
+                continue
+
             if row['Fee Coin'] == 'BNB':
                 datetime_str = row['Date(UTC)']
                 try:
@@ -78,6 +85,9 @@ def populate_bnb_fees(input_file, output_csv, verbose=False):
     if verbose:
         print(f"Processing {len(df)} rows...")
 
+    # Get the current date
+    current_date = datetime.now()
+
     # Determine the number of CPU cores to use
     num_cores = multiprocessing.cpu_count()
     
@@ -89,7 +99,7 @@ def populate_bnb_fees(input_file, output_csv, verbose=False):
 
     # Process the chunks in parallel
     processed_chunks = list(tqdm(
-        pool.imap(partial(process_chunk, verbose=verbose), chunks),
+        pool.imap(partial(process_chunk, current_date=current_date, verbose=verbose), chunks),
         total=len(chunks),
         desc="Processing trades",
         disable=not verbose
@@ -101,6 +111,12 @@ def populate_bnb_fees(input_file, output_csv, verbose=False):
 
     # Combine the processed chunks
     df = pd.concat(processed_chunks, ignore_index=True)
+
+    # Count rows omitted (current day trades)
+    rows_omitted = df[(pd.isna(df['BNB Price'])) & (pd.isna(df['Fee USDT']))].shape[0]
+
+    # Remove rows where BNB Price and Fee USDT are both None (current day trades)
+    df = df.dropna(subset=['BNB Price', 'Fee USDT'], how='all')
 
     try:
         # Write the updated DataFrame to a CSV file
@@ -139,6 +155,7 @@ def populate_bnb_fees(input_file, output_csv, verbose=False):
         print(f"{coin}: ${fee:.2f}")
     print(f"\nTotal rows processed: {rows_processed}")
     print(f"Rows with errors: {rows_with_errors}")
+    print(f"Rows omitted (current day trades): {rows_omitted}")
 
 def main():
     parser = argparse.ArgumentParser(description="Calculate Binance spot trading fees")
