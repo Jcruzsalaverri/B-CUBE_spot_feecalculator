@@ -4,9 +4,9 @@ This package helps calculate the total fees paid for spot trading on Binance ove
 
 ## Features
 
-- Download historical price data from Binance
-- Converts fees paid in any coin to USDT
-- Outputs total fees paid in USDT as well as a coin breakdown
+- Downloads historical trade data from Binance
+- Calculates fees paid in BNB and converts them to USDT
+- Outputs total fees paid in USD
 
 ## Prerequisites
 
@@ -31,7 +31,7 @@ This package helps calculate the total fees paid for spot trading on Binance ove
 3. Place the exported Excel file in the root folder of this project and rename it to `trade_history.xlsx`.
 4. Run the fee calculation script: 
 
- ``` python .\populate_bnb_fees.py ``` 
+ ``` python populate_bnb_fees.py ``` 
 
 5. The script will create a new file named `trade_history_with_bnb_prices_and_fees.csv` and display the total fees paid in the terminal.
 
@@ -45,17 +45,27 @@ The script supports the following command-line arguments:
 
 Example usage with verbose output:
 
- ``` python .\populate_bnb_fees.py -v ``` 
+ ``` python populate_bnb_fees.py -v ``` 
 
 Example usage:
 
- ``` python .\populate_bnb_fees.py -i my_trade_history.xlsx -o my_output.csv ``` 
+ ``` python populate_bnb_fees.py -i my_trade_history.xlsx -o my_output.csv ``` 
 
 ## File Description
 
 - `binance_market_data.py`: Downloads historical trade data from Binance.
 - `read_price_at_timestamp.py`: Reads the price of a ticker at a specific timestamp.
 - `populate_bnb_fees.py`: Main script that calculates fees and generates the output file.
+
+## To Do
+We're always looking to improve this project. Here's a list of features we're planning to implement. Feel free to contribute by tackling any of these items!
+
+- [ ] Omit trades from the current day from being processed (due to public market data delay of t-1)
+- [ ] Add graphing features to analyze fees over time
+- [ ] Develop additional KPIs
+
+If you're interested in working on any of these features, please check the [issues page](https://github.com/Jcruzsalaverri/B-CUBE_spot_feecalculator/issues) or open a new issue to discuss your implementation plan.
+
 
 ## Contributing
 

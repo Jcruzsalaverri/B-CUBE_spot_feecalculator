@@ -1,0 +1,8 @@
+# Exclude BNBUSDT directory and all its contents
+BNBUSDT/
+
+# Exclude all __pycache__ directories
+__pycache__/
+
+# Exclude all files starting with trade_
+trade_*
